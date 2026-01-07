@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package featureflags.v1;
+
+option go_package = "github.com/rafaelmaier/featureflags/proto/v1;featureflags";
+
+import "proto/v1/common.proto";
+
+service FeatureAdminService {
+    rpc CreateFeature(CreateFeatureRequest) returns (FeatureResponse);
+    rpc UpdateFeature(UpdateFeatureRequest) returns (FeatureResponse);
+    rpc DeleteFeature(DeleteFeatureRequest) returns (DeleteFeatureResponse);
+    rpc ListFeatures(ListFeaturesRequest) returns (ListFeaturesResponse);
+    rpc GetFeature(GetFeatureRequest) returns (FeatureResponse);
+}
+
+message CreateFeatureRequest {
+    FeatureFlag feature = 1;
+}
+
+message UpdateFeatureRequest {
+    FeatureFlag feature = 1;
+}
+
+message DeleteFeatureRequest{
+    string key = 1;
+}
+
+message DeleteFeatureResponse {
+    bool success = 1;
+}
+
+message GetFeatureRequest {
+    string key = 1;
+}
+
+message ListFeaturesRequest {}
+
+message ListFeaturesResponse {
+    repeated FeatureFlag features = 1;
+}
+
+message FeatureResponse{
+    FeatureFlag feature = 1;
+}
+

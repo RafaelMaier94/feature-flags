@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package featureflags.v1;
+
+option go_package = "github.com/rafaelmaier/featureflags/proto/v1;featureflags";
+
+import "proto/v1/common.proto";
+
+service FeatureStreamingService {
+  rpc Subscribe(SubscribeRequest) returns (stream FeatureUpdate);
+}
+
+message SubscribeRequest {
+  string client_id = 1;
+}
+
+message FeatureUpdate {
+  FeatureFlag feature = 1;
+  UpdateType type = 2;
+}
+
+enum UpdateType {
+  UPDATE_TYPE_UNSPECIFIED = 0;
+  CREATED = 1;
+  UPDATED = 2;
+  DELETED = 3;
+}

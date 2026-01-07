@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package featureflags.v1;
+
+option go_package = "github.com/rafaelmaier/featureflags/proto/v1;featureflags";
+
+service FeatureEvaluationService {
+    rpc Evaluate(EvaluateRequest) returns (EvaluateResponse);
+}
+
+message EvaluateRequest {
+    string feature_key = 1;
+    string user_id = 2;
+}
+
+message EvaluateResponse{
+    bool enabled = 1;
+    int64 version = 2;
+}

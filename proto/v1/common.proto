@@ -1,0 +1,26 @@
+syntax = "proto3";
+package featureflags.v1;
+
+option go_package = "github.com/rafaelmaier/featureflags/proto/v1;featureflags";
+
+message FeatureFlag {
+    string key = 1;
+    bool enabled = 2;
+    repeated Rule rules = 3;
+    int64 version = 4;
+}
+
+message Rule {
+    oneof Rule {
+        PercentageRule percentage = 1;
+        UserIDRule user_id = 2;
+    }
+}
+
+message PercentageRule {
+    int32 percentage = 1;
+}
+
+message UserIDRule {
+    repeated string user_ids = 1;
+}
