@@ -4,16 +4,24 @@ import (
 	"errors"
 )
 
+// RuleType represents the type of rule
+type RuleType string
+
+const (
+	RuleTypePercentage RuleType = "percentage"
+	RuleTypeUserID     RuleType = "user_id"
+)
+
 type RuleEvaluator interface {
-	Type() string;
+	Type() RuleType;
 	Validate() error;
 }
 
 type PercentageRule struct {
 	Percentage int32;
 }
-func (r *PercentageRule) Type() string {
-	return "percentage";
+func (r *PercentageRule) Type() RuleType {
+	return RuleTypePercentage;
 }
 func (r *PercentageRule) Validate() error{
 	if r.Percentage < 0 || r.Percentage > 100 {
@@ -25,8 +33,8 @@ func (r *PercentageRule) Validate() error{
 type UserIDRule struct{
 	UserIDs []string;
 }
-func (r *UserIDRule) Type() string{
-	return "user_id"
+func (r *UserIDRule) Type() RuleType{
+	return RuleTypeUserID
 }
 func (r *UserIDRule) Validate() error{
 	if len(r.UserIDs) == 0 {
